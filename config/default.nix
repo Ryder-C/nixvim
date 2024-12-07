@@ -56,7 +56,7 @@
   ];
   options = {
     theme = lib.mkOption {
-      default = lib.mkDefault "catppuccin-mocha";
+      default = lib.mkDefault "catppuccin";
       type = lib.types.enum [
         "aquarium"
         "decay"
@@ -74,6 +74,7 @@
         "paradise"
         "tokyonight"
         "yoru"
+        "catppuccin"
       ];
     };
     assistant = lib.mkOption {
