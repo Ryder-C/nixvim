@@ -56,7 +56,7 @@
   ];
   options = {
     theme = lib.mkOption {
-      default = lib.mkDefault "paradise";
+      default = lib.mkDefault "catppuccin-mocha";
       type = lib.types.enum [
         "aquarium"
         "decay"
