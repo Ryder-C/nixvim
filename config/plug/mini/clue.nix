@@ -1,8 +1,10 @@
-{ config, lib, ... }:
-let
-  colors = import ../../colors/${config.theme}.nix { };
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  colors = import ../../colors/${config.theme}.nix {};
+in {
   plugins.mini.modules.clue = {
     window = {
       delay = 500;
@@ -91,16 +93,15 @@ in
       }
     ];
     clues = [
-      { __raw = "require('mini.clue').gen_clues.builtin_completion()"; }
-      { __raw = "require('mini.clue').gen_clues.g()"; }
-      { __raw = "require('mini.clue').gen_clues.marks()"; }
-      { __raw = "require('mini.clue').gen_clues.registers()"; }
-      { __raw = "require('mini.clue').gen_clues.windows()"; }
-      { __raw = "require('mini.clue').gen_clues.z()"; }
+      {__raw = "require('mini.clue').gen_clues.builtin_completion()";}
+      {__raw = "require('mini.clue').gen_clues.g()";}
+      {__raw = "require('mini.clue').gen_clues.marks()";}
+      {__raw = "require('mini.clue').gen_clues.registers()";}
+      {__raw = "require('mini.clue').gen_clues.windows()";}
+      {__raw = "require('mini.clue').gen_clues.z()";}
     ];
   };
-  highlight =
-    with colors;
+  highlight = with colors;
     lib.mkIf (config.plugins.mini.enable && lib.hasAttr "clue" config.plugins.mini.modules) {
       MiniClueDescSingle = {
         bg = base01;

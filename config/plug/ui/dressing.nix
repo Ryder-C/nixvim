@@ -6,7 +6,7 @@
         relative = "win";
       };
       select = {
-        backend = [ "telescope" ];
+        backend = ["telescope"];
       };
     };
   };

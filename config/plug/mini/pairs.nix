@@ -1,3 +1,3 @@
 {
-  plugins.mini.modules.pairs = { };
+  plugins.mini.modules.pairs = {};
 }

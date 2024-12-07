@@ -1,3 +1,3 @@
 {
-  plugins.mini.modules.icons = { };
+  plugins.mini.modules.icons = {};
 }

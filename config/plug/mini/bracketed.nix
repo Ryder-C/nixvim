@@ -1,3 +1,3 @@
 {
-  plugins.mini.modules.backeted = { };
+  plugins.mini.modules.backeted = {};
 }

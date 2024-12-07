@@ -1,5 +1,4 @@
 {
-
   plugins.avante = {
     enable = false;
     settings = {

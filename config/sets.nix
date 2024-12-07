@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   performance = {
     byteCompileLua = {
       enable = true;

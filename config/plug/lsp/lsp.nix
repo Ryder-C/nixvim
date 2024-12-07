@@ -42,6 +42,18 @@
         yamlls = {
           enable = true;
         };
+        tinymist = {
+          enable = true;
+          settings = {
+            exportPdf = "onType";
+            outputPath = "$root/out/$name";
+          };
+        };
+        rust_analyzer = {
+          enable = true;
+          installCargo = false;
+          installRustc = false;
+        };
       };
       keymaps = {
         silent = true;

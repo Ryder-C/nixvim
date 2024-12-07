@@ -15,7 +15,7 @@
 
     # Close Telescope prompt in insert mode by clicking escape
     {
-      event = [ "FileType" ];
+      event = ["FileType"];
       pattern = "TelescopePrompt";
       command = "inoremap <buffer><silent> <ESC> <ESC>:close!<CR>";
     }

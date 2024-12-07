@@ -1,8 +1,10 @@
-{ config, lib, ... }:
-let
-  colors = import ../../colors/${config.theme}.nix { };
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  colors = import ../../colors/${config.theme}.nix {};
+in {
   plugins = {
     bufferline = {
       enable = true;

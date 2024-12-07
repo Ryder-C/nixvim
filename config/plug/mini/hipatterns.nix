@@ -1,5 +1,4 @@
 {
-
   plugins.mini.modules.hipatterns = {
     highlighters = {
       hex_color.__raw = ''

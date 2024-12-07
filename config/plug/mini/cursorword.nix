@@ -1,3 +1,3 @@
 {
-  plugins.mini.modules.cursorword = { };
+  plugins.mini.modules.cursorword = {};
 }

@@ -1,8 +1,10 @@
-{ config, lib, ... }:
-let
-  colors = import ../../colors/${config.theme}.nix { };
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  colors = import ../../colors/${config.theme}.nix {};
+in {
   plugins.mini.modules.files = {
     content = {
       filter.__raw = ''
@@ -85,15 +87,13 @@ in
   ];
   highlight =
     lib.mkIf (config.plugins.mini.enable && lib.hasAttr "files" config.plugins.mini.modules)
-      {
-        MiniFilesNormal = with colors; {
-          bg = base01;
-        };
-        MiniFilesBorder = with colors; {
-          bg = base01;
-          fg = base01;
-        };
-
+    {
+      MiniFilesNormal = with colors; {
+        bg = base01;
       };
-
+      MiniFilesBorder = with colors; {
+        bg = base01;
+        fg = base01;
+      };
+    };
 }

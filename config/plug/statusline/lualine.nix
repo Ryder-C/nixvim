@@ -1,8 +1,6 @@
-{ config, ... }:
-let
-  colors = import ../../colors/${config.theme}.nix { };
-in
-{
+{config, ...}: let
+  colors = import ../../colors/${config.theme}.nix {};
+in {
   plugins.lualine = {
     enable = true;
     settings = {
@@ -89,7 +87,7 @@ in
             separator.right = "";
           }
         ];
-        lualine_x = [ "" ];
+        lualine_x = [""];
         lualine_y = [
           {
             __unkeyed = "filetype";

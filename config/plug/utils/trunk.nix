@@ -1,10 +1,7 @@
-{ pkgs, ... }:
-let
-
+{pkgs, ...}: let
   pname = "neovim-trunk";
   version = "v0.1.3";
-in
-{
+in {
   extraPlugins = with pkgs.vimUtils; [
     (buildVimPlugin {
       inherit pname version;

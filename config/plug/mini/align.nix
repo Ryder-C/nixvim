@@ -1,3 +1,3 @@
 {
-  plugins.mini.modules.align = { };
+  plugins.mini.modules.align = {};
 }
