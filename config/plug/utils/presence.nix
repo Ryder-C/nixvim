@@ -1,3 +1,3 @@
 {
-  plugins.presence-nvim.enable = true;
+  plugins.neocord.enable = true;
 }
