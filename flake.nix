@@ -45,7 +45,6 @@
             src = ./.;
             hooks = {
               statix.enable = true;
-              nixfmt-rfc-style.enable = true;
               deadnix = {
                 enable = true;
                 settings = {
