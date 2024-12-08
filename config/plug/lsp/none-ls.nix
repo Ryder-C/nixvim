@@ -15,10 +15,7 @@
         yamllint.enable = true;
       };
       formatting = {
-        nixfmt = {
-          enable = true;
-          package = pkgs.nixfmt-rfc-style;
-        };
+        alejandra.enable = true;
         black = {
           enable = true;
           settings = ''
