@@ -57,6 +57,7 @@
     ./plug/utils/ufo.nix
     ./plug/utils/undotree.nix
     ./plug/utils/presence.nix
+    ./plug/utils/leap.nix
   ];
   options = {
     theme = lib.mkOption {
