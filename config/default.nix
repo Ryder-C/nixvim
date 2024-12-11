@@ -59,6 +59,7 @@
     ./plug/utils/presence.nix
     ./plug/utils/leap.nix
     ./plug/utils/sleuth.nix
+    ./plug/utils/toggleterm.nix
   ];
   options = {
     theme = lib.mkOption {
