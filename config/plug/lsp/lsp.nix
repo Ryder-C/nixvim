@@ -46,7 +46,7 @@
           enable = true;
           settings = {
             exportPdf = "onType";
-            outputPath = "$root/out/$name";
+            # outputPath = "$root/out/$name";
           };
         };
         rust_analyzer = {
