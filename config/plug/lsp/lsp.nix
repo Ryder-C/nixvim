@@ -30,7 +30,7 @@
         markdown_oxide = {
           enable = true;
         };
-        pyright = {
+        ruff = {
           enable = true;
         };
         gopls = {
