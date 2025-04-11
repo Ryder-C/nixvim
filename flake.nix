@@ -61,7 +61,9 @@
           default = nvim;
 
           # linters
-          linters = with pkgs; [yamllint];
+          linters = with pkgs; [
+            yamllint
+          ];
 
           formatters = with pkgs; [
             rustfmt

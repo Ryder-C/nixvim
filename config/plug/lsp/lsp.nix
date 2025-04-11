@@ -108,6 +108,7 @@
         # };
       };
     };
+    typescript-tools.enable = true;
   };
   extraConfigLua = ''
     local _border = "rounded"
