@@ -58,6 +58,7 @@
     ./plug/utils/undotree.nix
     ./plug/utils/presence.nix
     ./plug/utils/leap.nix
+    ./plug/utils/repeat.nix
     ./plug/utils/sleuth.nix
     ./plug/utils/toggleterm.nix
   ];
