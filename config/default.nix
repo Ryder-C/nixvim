@@ -10,57 +10,17 @@
     ./highlight.nix
 
     ./plug/colorscheme/colorscheme.nix
-
-    ./plug/completion/avante.nix
-    ./plug/completion/cmp.nix
-    ./plug/completion/copilot-cmp.nix
-    ./plug/completion/schemastore.nix
-
-    ./plug/git/gitblame.nix
-    ./plug/git/gitlinker.nix
-    ./plug/git/gitsigns.nix
-
-    ./plug/lsp/conform.nix
-    ./plug/lsp/lsp.nix
-    ./plug/lsp/lspsaga.nix
-    ./plug/lsp/none-ls.nix
-    ./plug/lsp/trouble.nix
-
-    ./plug/mini
-
-    ./plug/snacks/default.nix
-
     ./plug/snippets/luasnip.nix
-
     ./plug/statusline/lualine.nix
-    #./plug/statusline/staline.nix
 
-    ./plug/treesitter/treesitter-context.nix
-    ./plug/treesitter/treesitter-textobjects.nix
-    ./plug/treesitter/treesitter.nix
-
-    ./plug/ui/bufferline.nix
-    ./plug/ui/dressing.nix
-    ./plug/ui/indent-blankline.nix
-    ./plug/ui/noice.nix
-    ./plug/ui/nvim-notify.nix
-    ./plug/ui/smart-splits.nix
-    ./plug/ui/telescope.nix
-
-    ./plug/utils/comment-box.nix
-    ./plug/utils/comment.nix
-    ./plug/utils/helm.nix
-    ./plug/utils/markview.nix
-    ./plug/utils/obsidian.nix
-    ./plug/utils/spectre.nix
-    ./plug/utils/trunk.nix
-    ./plug/utils/ufo.nix
-    ./plug/utils/undotree.nix
-    ./plug/utils/presence.nix
-    ./plug/utils/leap.nix
-    ./plug/utils/repeat.nix
-    ./plug/utils/sleuth.nix
-    ./plug/utils/toggleterm.nix
+    ./plug/completion
+    ./plug/git
+    ./plug/lsp
+    ./plug/mini
+    ./plug/snacks
+    ./plug/treesitter
+    ./plug/ui
+    ./plug/utils
   ];
   options = {
     theme = lib.mkOption {

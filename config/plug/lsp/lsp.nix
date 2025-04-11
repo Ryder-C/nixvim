@@ -13,9 +13,6 @@
         lua_ls = {
           enable = true;
         };
-        # nil-ls = {
-        #   enable = true;
-        # };
         nixd = {
           enable = true;
           extraOptions = {
