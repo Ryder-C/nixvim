@@ -38,6 +38,7 @@
           enable = true;
         };
         hclfmt.enable = true;
+        typstyle.enable = true;
       };
     };
   };

@@ -57,35 +57,10 @@
 
         # formatter = pkgs.nixfmt-rfc-style;
 
-        packages = {
-          default = nvim;
-
-          # linters
-          linters = with pkgs; [
-            yamllint
-          ];
-
-          formatters = with pkgs; [
-            rustfmt
-            prettierd
-            typstyle
-            stylua
-            alejandra
-            black
-            yamlfmt
-            hclfmt
-          ];
-        };
+        packages.default = nvim;
 
         devShells = {
-          default = with pkgs;
-            mkShell {
-              # Concatenate the lists of linters and formatters.
-              buildInputs = self.packages.linters ++ self.packages.formatters;
-
-              # Inherit the pre-commit hook's shellHook to run any startup commands.
-              inherit (self'.checks.pre-commit-check) shellHook;
-            };
+          default = with pkgs; mkShell {inherit (self'.checks.pre-commit-check) shellHook;};
         };
       };
     };
