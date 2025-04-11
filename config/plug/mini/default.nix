@@ -17,5 +17,6 @@
     ./notify.nix
     ./pairs.nix
     ./surround.nix
+    ./move.nix
   ];
 }
