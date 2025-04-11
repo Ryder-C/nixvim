@@ -63,6 +63,8 @@
           "hclfmt"
         ];
         rust = ["rustfmt"];
+
+        typst = ["typstyle"];
       };
     };
   };

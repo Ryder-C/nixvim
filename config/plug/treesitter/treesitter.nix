@@ -1,5 +1,8 @@
 {pkgs, ...}: {
-  filetype.extension.liq = "liquidsoap";
+  filetype.extension = {
+    liq = "liquidsoap";
+    typ = "typst";
+  };
 
   plugins.treesitter = {
     enable = true;
