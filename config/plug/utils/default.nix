@@ -14,5 +14,6 @@
     ./undotree.nix
     ./toggleterm.nix
     ./comment-box.nix
+    ./typst.nix
   ];
 }
