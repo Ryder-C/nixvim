@@ -27,6 +27,8 @@
         "tex"
         "latex"
         "markdown"
+        "typst"
+        "typ"
       ];
       command = "setlocal spell spelllang=en,fr";
     }
