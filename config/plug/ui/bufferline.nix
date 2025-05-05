@@ -120,7 +120,7 @@ in {
 
     {
       mode = "n";
-      key = "<S-l>";
+      key = "<S-n>";
       action = "<cmd>BufferLineCycleNext<cr>";
       options = {
         desc = "Cycle to next buffer";
@@ -129,7 +129,7 @@ in {
 
     {
       mode = "n";
-      key = "<S-h>";
+      key = "<S-o>";
       action = "<cmd>BufferLineCyclePrev<cr>";
       options = {
         desc = "Cycle to previous buffer";

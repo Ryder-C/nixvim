@@ -83,14 +83,14 @@ in {
         mode = "n";
         keys = "<C-w>";
       }
-      {
-        mode = "n";
-        keys = "z";
-      }
-      {
-        mode = "x";
-        keys = "z";
-      }
+      # {
+      #   mode = "n";
+      #   keys = "j";
+      # }
+      # {
+      #   mode = "x";
+      #   keys = "j";
+      # }
     ];
     clues = [
       {__raw = "require('mini.clue').gen_clues.builtin_completion()";}
@@ -98,7 +98,7 @@ in {
       {__raw = "require('mini.clue').gen_clues.marks()";}
       {__raw = "require('mini.clue').gen_clues.registers()";}
       {__raw = "require('mini.clue').gen_clues.windows()";}
-      {__raw = "require('mini.clue').gen_clues.z()";}
+      # {__raw = "require('mini.clue').gen_clues.z()";}
     ];
   };
   highlight = with colors;

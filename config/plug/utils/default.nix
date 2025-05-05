@@ -2,6 +2,7 @@
   imports = [
     ./ufo.nix
     ./helm.nix
+    ./colemak.nix
     ./leap.nix
     ./trunk.nix
     ./repeat.nix

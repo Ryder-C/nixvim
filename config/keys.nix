@@ -166,7 +166,7 @@
 
     {
       mode = "n";
-      key = "<C-h>";
+      key = "<C-n>";
       action = "<C-W>h";
       options = {
         silent = true;
@@ -176,7 +176,7 @@
 
     {
       mode = "n";
-      key = "<C-l>";
+      key = "<C-o>";
       action = "<C-W>l";
       options = {
         silent = true;
@@ -186,7 +186,7 @@
 
     {
       mode = "n";
-      key = "<C-k>";
+      key = "<C-i>";
       action = "<C-W>k";
       options = {
         silent = true;
@@ -196,7 +196,7 @@
 
     {
       mode = "n";
-      key = "<C-j>";
+      key = "<C-e>";
       action = "<C-W>j";
       options = {
         silent = true;
