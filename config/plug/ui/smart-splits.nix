@@ -3,49 +3,49 @@
   keymaps = [
     {
       mode = "n";
-      key = "<C-n>";
+      key = "<C-h>";
       action = ":lua require('smart-splits').move_cursor_left()<CR>";
       options.silent = true;
     }
     {
       mode = "n";
-      key = "<C-e>";
+      key = "<C-j>";
       action = ":lua require('smart-splits').move_cursor_down()<CR>";
       options.silent = true;
     }
     {
       mode = "n";
-      key = "<C-i>";
+      key = "<C-k>";
       action = ":lua require('smart-splits').move_cursor_up()<CR>";
       options.silent = true;
     }
     {
       mode = "n";
-      key = "<C-o>";
+      key = "<C-l>";
       action = ":lua require('smart-splits').move_cursor_right()<CR>";
       options.silent = true;
     }
     {
       mode = "n";
-      key = "<A-n>";
+      key = "<A-h>";
       action = ":lua require('smart-splits').resize_left()<CR>";
       options.silent = true;
     }
     {
       mode = "n";
-      key = "<A-e>";
+      key = "<A-j>";
       action = ":lua require('smart-splits').resize_down()<CR>";
       options.silent = true;
     }
     {
       mode = "n";
-      key = "<A-i>";
+      key = "<A-k>";
       action = ":lua require('smart-splits').resize_up()<CR>";
       options.silent = true;
     }
     {
       mode = "n";
-      key = "<A-o>";
+      key = "<A-l>";
       action = ":lua require('smart-splits').resize_right()<CR>";
       options.silent = true;
     }

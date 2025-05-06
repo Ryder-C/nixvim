@@ -18,12 +18,6 @@ in {
     };
     mappings = {
       synchronize = "s";
-
-      # COLEMAK
-      go_in = "o";
-      go_in_plus = "O";
-      go_out = "n";
-      go_out_plus = "N";
     };
   };
   keymaps = lib.mkIf (config.plugins.mini.enable && lib.hasAttr "files" config.plugins.mini.modules) [
