@@ -1,4 +1,9 @@
 {
+  pkgs,
+  lib,
+  ...
+}:
+lib.mkIf (!pkgs.stdenv.isDarwin) {
   plugins.obsidian = {
     enable = true;
     settings = {
