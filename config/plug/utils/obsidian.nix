@@ -2,10 +2,6 @@
   plugins.obsidian = {
     enable = true;
     settings = {
-      # Avoid requiring obsidian.pickers._fzf by selecting Telescope explicitly
-      picker = {
-        name = "telescope.nvim";
-      };
       completion = {
         min_chars = 2;
         nvim_cmp = false;
