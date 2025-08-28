@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   performance = {
     byteCompileLua = {
       enable = true;
@@ -11,13 +15,30 @@
     # Use system clipboard
     register = "unnamedplus";
 
-    providers = {
-      wl-copy = {
-        enable = true;
-        package = pkgs.wl-clipboard;
+    providers =
+      if pkgs.stdenv.isDarwin
+      then {}
+      else {
+        # Wayland clipboard only on non-Darwin systems
+        wl-copy = {
+          enable = true;
+          package = pkgs.wl-clipboard;
+        };
       };
-    };
   };
+
+  assertions = [
+    # Guardrail: do not enable wl-clipboard on Darwin
+    {
+      assertion = !pkgs.stdenv.isDarwin || !(config.clipboard.providers."wl-copy".enable or false);
+      message = "Darwin builds must not enable wl-clipboard (Wayland). Use pbcopy provider.";
+    }
+    # Guardrail: ensure wl-clipboard is present for non-Darwin builds
+    {
+      assertion = pkgs.stdenv.isDarwin || (config.clipboard.providers."wl-copy".enable or false);
+      message = "Non-Darwin builds must enable the wl-clipboard provider.";
+    }
+  ];
   diagnostic.settings = {
     update_in_insert = true;
     severity_sort = true;

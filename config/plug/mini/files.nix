@@ -69,8 +69,14 @@ in {
              local path = curr_entry.path
              -- Escape the path for shell command
              local escaped_path = vim.fn.fnameescape(path)
-             -- Build the osascript command to copy the file or directory to the clipboard
-             local cmd = string.format([[cat %s | wl-copy ]], escaped_path)
+             -- Choose platform-appropriate clipboard command
+             local is_macos = (vim.loop.os_uname().sysname == 'Darwin')
+             local cmd
+             if is_macos then
+               cmd = string.format([[cat %s | pbcopy ]], escaped_path)
+             else
+               cmd = string.format([[cat %s | wl-copy ]], escaped_path)
+             end
              local result = vim.fn.system(cmd)
              if vim.v.shell_error ~= 0 then
                vim.notify("Copy failed: " .. result, vim.log.levels.ERROR)
