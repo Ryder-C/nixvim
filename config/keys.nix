@@ -8,6 +8,7 @@
       key = "<C-c>";
       action = "ciw";
     }
+
     {
       mode = "n";
       key = "<leader>R";
