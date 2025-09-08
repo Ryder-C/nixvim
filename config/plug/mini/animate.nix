@@ -1,3 +1,5 @@
 {
-  plugins.mini.modules.animate = {};
+  plugins.mini.modules.animate = {
+    scroll.enable = false;
+  };
 }

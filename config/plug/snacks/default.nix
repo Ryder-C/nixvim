@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       scroll = {
-        enabled = false;
+        enabled = true;
       };
     };
   };
