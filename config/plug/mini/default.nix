@@ -21,5 +21,6 @@
     ./pairs.nix
     ./surround.nix
     ./move.nix
+    ./pick.nix
   ];
 }
