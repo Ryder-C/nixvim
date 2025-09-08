@@ -2,11 +2,14 @@
   plugins.mini = {
     enable = true;
     mockDevIcons = true;
+
+    modules.statusline = {};
   };
 
   imports = [
     ./ai.nix
     ./align.nix
+    ./animate.nix
     ./clue.nix
     ./cursorword.nix
     ./diff.nix
