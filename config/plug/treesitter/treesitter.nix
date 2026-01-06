@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   filetype.extension = {
     liq = "liquidsoap";
     typ = "typst";
@@ -16,7 +17,7 @@
       };
     };
 
-    folding = true;
+    folding.enable = true;
     languageRegister.liq = "liquidsoap";
     nixvimInjections = true;
     grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;

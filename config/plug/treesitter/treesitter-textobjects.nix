@@ -1,6 +1,12 @@
+{ pkgs, ... }:
 {
   plugins.treesitter-textobjects = {
     enable = true;
+    package = pkgs.vimPlugins.nvim-treesitter-textobjects.overrideAttrs (_old: {
+      doCheck = false;
+      doInstallCheck = false;
+      nvimRequireCheck = null;
+    });
     settings = {
       select = {
         enable = true;
