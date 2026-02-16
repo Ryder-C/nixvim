@@ -1,3 +1,10 @@
 {
-  plugins.neocord.enable = false;
+  plugins.cord = {
+    enable = true;
+    settings = {
+      display = {
+        theme = "catppuccin";
+      };
+    };
+  };
 }
