@@ -54,6 +54,7 @@ in {
           {
             name = "nvim_lsp";
             priority = 1000;
+            group_index = 1;
             option = {
               inherit get_bufnrs;
             };
@@ -61,27 +62,36 @@ in {
           {
             name = "nvim_lsp_signature_help";
             priority = 1000;
+            group_index = 1;
             option = {
               inherit get_bufnrs;
-            };
-          }
-          {
-            name = "gitlab";
-            priority = 1000;
-            option = {
-              hosts = ["https://gitlab.dnm.radiofrance.fr"];
             };
           }
           {
             name = "nvim_lsp_document_symbol";
             priority = 1000;
+            group_index = 1;
             option = {
               inherit get_bufnrs;
             };
           }
           {
+            name = "copilot";
+            priority = 900;
+            group_index = 1;
+          }
+          {
+            name = "gitlab";
+            priority = 800;
+            group_index = 1;
+            option = {
+              hosts = ["https://gitlab.dnm.radiofrance.fr"];
+            };
+          }
+          {
             name = "treesitter";
             priority = 850;
+            group_index = 2;
             option = {
               inherit get_bufnrs;
             };
@@ -89,54 +99,99 @@ in {
           {
             name = "luasnip";
             priority = 750;
+            group_index = 2;
           }
           {
             name = "buffer";
             priority = 500;
+            group_index = 2;
             option = {
               inherit get_bufnrs;
             };
           }
           {
-            name = "copilot";
-            priority = 400;
-          }
-          {
             name = "rg";
             priority = 300;
+            group_index = 2;
           }
           {
             name = "path";
             priority = 300;
+            group_index = 2;
           }
           {
             name = "cmdline";
             priority = 300;
+            group_index = 2;
           }
           {
             name = "spell";
             priority = 300;
+            group_index = 2;
+          }
+          {
+            name = "fish";
+            priority = 250;
+            group_index = 2;
           }
           {
             name = "git";
             priority = 250;
-          }
-          {
-            name = "zsh";
-            priority = 250;
+            group_index = 2;
           }
           {
             name = "calc";
             priority = 150;
+            group_index = 2;
           }
           {
             name = "emoji";
             priority = 100;
+            group_index = 2;
           }
         ];
+        sorting = {
+          comparators = [
+            # Lua
+            "require('cmp.config.compare').offset"
+            # Lua
+            "require('cmp.config.compare').exact"
+            # Lua
+            "require('cmp.config.compare').score"
+            # Lua
+            ''
+              function(entry1, entry2)
+                local types = require('cmp.types')
+                local kind1 = entry1:get_kind()
+                local kind2 = entry2:get_kind()
+                -- Push Snippet and Text to the bottom
+                if kind1 == types.lsp.CompletionItemKind.Snippet then kind1 = 100 end
+                if kind1 == types.lsp.CompletionItemKind.Text then kind1 = 101 end
+                if kind2 == types.lsp.CompletionItemKind.Snippet then kind2 = 100 end
+                if kind2 == types.lsp.CompletionItemKind.Text then kind2 = 101 end
+                if kind1 ~= kind2 then
+                  local diff = kind1 - kind2
+                  if diff < 0 then return true
+                  elseif diff > 0 then return false
+                  end
+                end
+                return nil
+              end
+            ''
+            # Lua
+            "require('cmp.config.compare').recently_used"
+            # Lua
+            "require('cmp.config.compare').locality"
+            # Lua
+            "require('cmp.config.compare').length"
+            # Lua
+            "require('cmp.config.compare').order"
+          ];
+        };
       };
     };
 
+    cmp-fish.enable = true;
     friendly-snippets.enable = true;
     luasnip.enable = true;
 
