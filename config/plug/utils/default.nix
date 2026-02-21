@@ -10,7 +10,7 @@
     ./spectre.nix
     ./markview.nix
     ./obsidian.nix
-    ./presence.nix
+    # ./presence.nix
     ./undotree.nix
     ./toggleterm.nix
     ./comment-box.nix
