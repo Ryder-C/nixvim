@@ -10,6 +10,9 @@
         html = {
           enable = true;
         };
+        astro = {
+          enable = true;
+        };
         lua_ls = {
           enable = true;
         };
