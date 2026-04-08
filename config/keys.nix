@@ -12,7 +12,7 @@
     {
       mode = "n";
       key = "<leader>R";
-      action = ":%s/\<C-r><C-w>//g<Left><Left>";
+      action = ":%s/\\<C-r><C-w>//g<Left><Left>";
       options = {
         desc = "Search and replace word under cursor";
       };

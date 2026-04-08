@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   plugins.none-ls = {
     enable = true;
     enableLspFormat = true;
@@ -26,6 +26,7 @@
         };
         prettier = {
           enable = true;
+          package = pkgs.prettier;
           disableTsServerFormatter = true;
           settings = ''
             {
