@@ -1,8 +1,5 @@
 {
   plugins = {
-    lsp-format = {
-      enable = true;
-    };
     lsp = {
       enable = true;
       inlayHints = true;
@@ -111,7 +108,21 @@
         # };
       };
     };
-    typescript-tools.enable = true;
+    typescript-tools = {
+      enable = true;
+      settings = {
+        on_attach = ''
+          function(client, bufnr)
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          end
+        '';
+        settings = {
+          expose_as_code_action = "all";
+          tsserver_format_options = {};
+        };
+      };
+    };
   };
   extraConfigLua = ''
     local _border = "rounded"

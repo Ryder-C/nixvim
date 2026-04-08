@@ -1,7 +1,7 @@
-{pkgs, ...}: {
+_: {
   plugins.none-ls = {
     enable = true;
-    enableLspFormat = true;
+    enableLspFormat = false;
     settings = {
       updateInInsert = false;
     };
@@ -15,31 +15,13 @@
         yamllint.enable = true;
       };
       formatting = {
-        alejandra.enable = true;
-        black = {
-          enable = true;
-          settings = ''
-            {
-              extra_args = { "--fast" },
-            }
-          '';
-        };
-        prettier = {
-          enable = true;
-          package = pkgs.prettier;
-          disableTsServerFormatter = true;
-          settings = ''
-            {
-              extra_args = { "--no-semi" },
-            }
-          '';
-        };
-        stylua.enable = true;
-        yamlfmt = {
-          enable = true;
-        };
-        hclfmt.enable = true;
-        typstyle.enable = true;
+        alejandra.enable = false;
+        black.enable = false;
+        prettier.enable = false;
+        stylua.enable = false;
+        yamlfmt.enable = false;
+        hclfmt.enable = false;
+        typstyle.enable = false;
       };
     };
   };
