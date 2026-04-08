@@ -1,29 +1,29 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   filetype.extension = {
     liq = "liquidsoap";
     typ = "typst";
   };
 
-  plugins.treesitter = {
-    enable = true;
+  plugins = {
+    treesitter = {
+      enable = true;
 
-    settings = {
-      indent = {
-        enable = true;
+      settings = {
+        indent = {
+          enable = true;
+        };
+        highlight = {
+          enable = true;
+        };
       };
-      highlight = {
-        enable = true;
-      };
+
+      folding.enable = true;
+      languageRegister.liq = "liquidsoap";
+      nixvimInjections = true;
+      grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
     };
 
-    folding.enable = true;
-    languageRegister.liq = "liquidsoap";
-    nixvimInjections = true;
-    grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
+    ts-autotag.enable = true;
+    ts-comments.enable = true;
   };
-
-  plugins.ts-autotag.enable = true;
-  plugins.ts-comments.enable = true;
-
 }
