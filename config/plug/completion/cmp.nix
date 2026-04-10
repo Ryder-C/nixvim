@@ -140,6 +140,11 @@ in {
             group_index = 2;
           }
           {
+            name = "vimtex";
+            priority = 800;
+            group_index = 1;
+          }
+          {
             name = "calc";
             priority = 150;
             group_index = 2;
