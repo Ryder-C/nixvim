@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   plugins = {
     lsp = {
       enable = true;
@@ -6,6 +6,10 @@
       servers = {
         html = {
           enable = true;
+        };
+        mdx_analyzer = {
+          enable = true;
+          package = pkgs.mdx-language-server;
         };
         astro = {
           enable = true;

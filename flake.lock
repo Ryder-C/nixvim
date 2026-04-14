@@ -76,6 +76,22 @@
         "type": "github"
       }
     },
+    "mdx-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774894585,
+        "narHash": "sha256-1yFasKL2UKRd/j9nn8mjiFZOs9sR2GKomoCejtL1XIs=",
+        "owner": "davidmh",
+        "repo": "mdx.nvim",
+        "rev": "c2644328587bbd58eede41b2cd0c1ccc99175661",
+        "type": "github"
+      },
+      "original": {
+        "owner": "davidmh",
+        "repo": "mdx.nvim",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1775710090,
@@ -154,6 +170,7 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
+        "mdx-nvim": "mdx-nvim",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "pre-commit-hooks": "pre-commit-hooks"

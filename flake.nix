@@ -12,6 +12,10 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mdx-nvim = {
+      url = "github:davidmh/mdx.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -38,6 +42,7 @@
         nvim = nixvim'.makeNixvimWithModule {
           inherit pkgs;
           module = ./config;
+          extraSpecialArgs = {inherit inputs;};
         };
       in {
         checks = {

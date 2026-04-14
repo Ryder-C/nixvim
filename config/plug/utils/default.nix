@@ -16,5 +16,6 @@
     ./comment-box.nix
     ./typst.nix
     ./latex.nix
+    ./mdx.nix
   ];
 }
