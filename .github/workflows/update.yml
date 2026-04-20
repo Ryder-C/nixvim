@@ -28,7 +28,19 @@ jobs:
         commit-msg: ':package:(flake): bump'
         token: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Checkout PR Branch
+      if: steps.update.outputs.pull-request-number != ''
+      uses: actions/checkout@v4
+      with:
+        ref: refs/pull/${{ steps.update.outputs.pull-request-number }}/head
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Validate Updated Flake
+      if: steps.update.outputs.pull-request-number != ''
+      run: nix flake check --accept-flake-config
+
     - name: Merge Changes
+      if: steps.update.outputs.pull-request-number != '' && success()
       run: gh pr merge ${{ steps.update.outputs.pull-request-number }} --squash --delete-branch
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
