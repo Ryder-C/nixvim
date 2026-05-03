@@ -57,6 +57,6 @@ jobs:
 
     steps:
     - name: Merge PR
-      run: gh pr merge ${{ needs.update.outputs.pr-number }} --squash --delete-branch
+      run: gh pr merge ${{ needs.update.outputs.pr-number }} --squash --delete-branch --repo ${{ github.repository }}
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
