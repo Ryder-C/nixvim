@@ -131,17 +131,19 @@
   extraConfigLua = ''
     local _border = "rounded"
 
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-      vim.lsp.handlers.hover, {
-        border = _border
-      }
-    )
+    local _orig_hover = vim.lsp.buf.hover
+    vim.lsp.buf.hover = function(opts)
+      opts = opts or {}
+      opts.border = opts.border or _border
+      return _orig_hover(opts)
+    end
 
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-      vim.lsp.handlers.signature_help, {
-        border = _border
-      }
-    )
+    local _orig_signature_help = vim.lsp.buf.signature_help
+    vim.lsp.buf.signature_help = function(opts)
+      opts = opts or {}
+      opts.border = opts.border or _border
+      return _orig_signature_help(opts)
+    end
 
     vim.diagnostic.config{
       float={border=_border}

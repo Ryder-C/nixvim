@@ -11,8 +11,4 @@
       doCheck = false;
     })
   ];
-
-  extraConfigLua = ''
-    require("mdx").setup()
-  '';
 }
