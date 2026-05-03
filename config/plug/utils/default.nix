@@ -9,7 +9,6 @@
     ./comment.nix
     ./spectre.nix
     ./markview.nix
-    ./obsidian.nix
     # ./presence.nix
     ./undotree.nix
     ./toggleterm.nix
