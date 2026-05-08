@@ -1,9 +1,21 @@
-{
+{pkgs, ...}: {
   plugins = {
     vimtex = {
       enable = true;
+      # zathura doesn't build cleanly on darwin (appstream dep), use Skim there
+      zathuraPackage =
+        if pkgs.stdenv.isDarwin
+        then null
+        else pkgs.zathura;
+      mupdfPackage =
+        if pkgs.stdenv.isDarwin
+        then null
+        else pkgs.mupdf;
       settings = {
-        view_method = "zathura";
+        view_method =
+          if pkgs.stdenv.isDarwin
+          then "skim"
+          else "zathura";
         compiler_method = "latexmk";
         fold_enabled = 1;
       };
