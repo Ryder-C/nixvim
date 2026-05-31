@@ -5,7 +5,7 @@
     ./bufferline.nix
     ./nvim-notify.nix
     ./smart-splits.nix
-    ./indent-blankline.nix
+    ./blink-indent.nix
     ./hardtime.nix
   ];
 }

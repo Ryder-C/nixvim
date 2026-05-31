@@ -1,10 +1,8 @@
 {
   imports = [
-    ./cmp.nix
     ./blink.nix
+    ./copilot.nix
     ./avante.nix
-    ./lspkind.nix
-    ./copilot-cmp.nix
     ./schemastore.nix
   ];
 }

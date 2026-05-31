@@ -21,11 +21,6 @@
       };
     };
 
-    # cmp-vimtex: completion source for nvim-cmp (active completion engine)
-    cmp-vimtex.enable = true;
-
-    # blink-cmp-latex: completion source for blink-cmp (ready if switched)
-    blink-cmp-latex.enable = true;
   };
 
   keymaps = [
