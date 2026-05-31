@@ -46,10 +46,8 @@
   plugins.render-markdown = {
     enable = true;
     settings = {
-      file_types = [
-        "markdown"
-        "Avante"
-      ];
+      file_types = ["Avante"];
+      latex.enabled = false;
     };
   };
 }

@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  extraPackages = [pkgs.tree-sitter];
+
   filetype.extension = {
     liq = "liquidsoap";
     typ = "typst";
