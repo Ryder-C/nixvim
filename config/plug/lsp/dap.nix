@@ -1,10 +1,5 @@
 {pkgs, ...}: let
   codelldb = pkgs.vscode-extensions.vadimcn.vscode-lldb;
-  codelldbRoot = "${codelldb}/share/vscode/extensions/vadimcn.vscode-lldb";
-  liblldbExt =
-    if pkgs.stdenv.isDarwin
-    then "dylib"
-    else "so";
 in {
   extraPackages = [codelldb];
 
