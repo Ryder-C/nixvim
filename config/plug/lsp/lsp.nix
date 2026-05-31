@@ -50,11 +50,6 @@
             # outputPath = "$root/out/$name";
           };
         };
-        rust_analyzer = {
-          enable = true;
-          installCargo = false;
-          installRustc = false;
-        };
         clangd = {
           enable = true;
         };
@@ -146,7 +141,8 @@
     end
 
     vim.diagnostic.config{
-      float={border=_border}
+      float={border=_border},
+      virtual_text=true,
     };
 
     require('lspconfig.ui.windows').default_options = {

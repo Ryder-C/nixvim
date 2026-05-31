@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "mcp__plugin_claude-code-home-manager_nixos__nix"
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "mcp__plugin_claude-code-home-manager_nixos__nix",
+      "Bash(gh run:*)",
+      "Bash(nix eval:*)",
+      "Bash(nix path-info *)"
     ]
   }
 }
