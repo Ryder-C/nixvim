@@ -6,6 +6,7 @@
     stylua
     yamlfmt
     hclfmt
+    typstyle
   ];
 
   plugins.conform-nvim = {
