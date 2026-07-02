@@ -27,6 +27,31 @@
       };
   };
 
+  # Over SSH there is no local Wayland display, so wl-clipboard cannot reach the
+  # local clipboard. Fall back to OSC 52 (terminal escape sequences) when in an
+  # SSH session so yanks to "+"/"*" still land on the local machine's clipboard.
+  extraConfigLua = ''
+    if vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
+      local osc52 = require("vim.ui.clipboard.osc52")
+      -- Paste reads the unnamed register instead of querying the terminal,
+      -- which avoids hangs on terminals that don't answer OSC 52 read requests.
+      local function paste()
+        return vim.split(vim.fn.getreg(""), "\n")
+      end
+      vim.g.clipboard = {
+        name = "OSC 52",
+        copy = {
+          ["+"] = osc52.copy("+"),
+          ["*"] = osc52.copy("*"),
+        },
+        paste = {
+          ["+"] = paste,
+          ["*"] = paste,
+        },
+      }
+    end
+  '';
+
   assertions = [
     # Guardrail: do not enable wl-clipboard on Darwin
     {
