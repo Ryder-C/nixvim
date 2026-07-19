@@ -49,6 +49,10 @@
         };
       in {
         checks = {
+          # Build the actual nixvim package so `nix flake check` fails when the
+          # configuration doesn't build (e.g. after a flake input bump).
+          build = self'.packages.default;
+
           pre-commit-check = pre-commit-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
