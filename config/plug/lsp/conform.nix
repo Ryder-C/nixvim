@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   extraPackages = with pkgs; [
+    alejandra
     prettierd
     prettier
     black

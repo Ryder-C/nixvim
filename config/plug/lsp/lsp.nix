@@ -1,4 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  systemFlake = "/home/ryder/nixos-config";
+  thisFlake = "/home/ryder/Code/nixvim";
+
+  # nixd evaluates these strings itself, so the host is resolved at LSP runtime
+  # rather than baking one hostname into a config shared by all four machines.
+  nixosOptions = ''(builtins.getFlake "${systemFlake}").nixosConfigurations.''${builtins.replaceStrings ["\n"] [""] (builtins.readFile /etc/hostname)}.options'';
+in {
   plugins = {
     lsp = {
       enable = true;
@@ -17,14 +28,35 @@
         lua_ls = {
           enable = true;
         };
+        # Runs alongside nixd: nil contributes static lints (unused bindings,
+        # redundant `with`), nixd contributes evaluation-based errors and
+        # option/package completion. Formatting is left to conform's alejandra.
+        nil_ls = {
+          enable = true;
+          onAttach.function = ''
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          '';
+        };
         nixd = {
           enable = true;
-          extraOptions = {
-            nixos = {
-              expr = "(builtins.getFlake \"/etc/nixos\").nixosConfigurations.aurelionite.options";
-            };
-            home_manager = {
-              expr = "(builtins.getFlake \"/etc/nixos\").homeConfigurations.aurelionite.options";
+          settings = {
+            # Without this nixd cannot complete or document `pkgs.*` at all.
+            # Reuse the system flake's nixpkgs so this costs no extra closure.
+            nixpkgs.expr = ''import (builtins.getFlake "${systemFlake}").inputs.nixpkgs {}'';
+
+            formatting.command = [(lib.getExe pkgs.alejandra)];
+
+            options = {
+              nixos.expr = nixosOptions;
+
+              # home-manager is a NixOS module here, not a standalone
+              # homeConfigurations output.
+              home-manager.expr = "${nixosOptions}.home-manager.users.type.getSubOptions []";
+
+              # Options for this repo itself, so editing the nixvim config gets
+              # completion for `plugins.*`, `keymaps.*`, etc.
+              nixvim.expr = ''((builtins.getFlake "${thisFlake}").inputs.nixvim.legacyPackages.''${builtins.currentSystem}.makeNixvimWithModule {module = {};}).options'';
             };
           };
         };

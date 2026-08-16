@@ -8,19 +8,19 @@ in {
         theme = {
           normal = {
             a = {
-              bg = "#nil";
+              bg = "none";
             };
             b = {
-              bg = "nil";
+              bg = "none";
             };
             c = {
-              bg = "nil";
+              bg = "none";
             };
             z = {
-              bg = "nil";
+              bg = "none";
             };
             y = {
-              bg = "nil";
+              bg = "none";
             };
           };
         };
@@ -47,7 +47,6 @@ in {
             fmt = "string.lower";
             color = {
               fg = colors.base04;
-              bg = "nil";
             };
             separator.left = "";
             separator.right = "";
@@ -59,7 +58,6 @@ in {
             icon.__unkeyed = "";
             color = {
               fg = colors.base04;
-              bg = "nil";
             };
             separator.left = "";
             separator.right = "";
@@ -81,7 +79,6 @@ in {
             };
             color = {
               fg = colors.base08;
-              bg = "nil";
             };
             separator.left = "";
             separator.right = "";
@@ -104,7 +101,6 @@ in {
             };
             color = {
               fg = colors.base05;
-              bg = "nil";
             };
             separator.left = "";
             separator.right = "";
@@ -115,7 +111,6 @@ in {
             __unkeyed = "location";
             color = {
               fg = colors.base0B;
-              bg = "nil";
             };
             separator.left = "";
             separator.right = "";

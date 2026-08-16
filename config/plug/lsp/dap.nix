@@ -1,5 +1,11 @@
 {pkgs, ...}: let
   codelldb = pkgs.vscode-extensions.vadimcn.vscode-lldb;
+  codelldbPath = "${codelldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+  liblldbExt =
+    if pkgs.stdenv.isDarwin
+    then "dylib"
+    else "so";
+  liblldbPath = "${codelldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.${liblldbExt}";
 in {
   extraPackages = [codelldb];
 
@@ -92,6 +98,60 @@ in {
     dap.listeners.before.launch.dapui_config = function() dapui.open() end
     dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
     dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
+
+    -- codelldb as a plain nvim-dap adapter (rustaceanvim wires its own copy
+    -- internally; this one is for hand-rolled configurations).
+    dap.adapters.codelldb = {
+      type = "server",
+      port = "''${port}",
+      executable = {
+        command = "${codelldbPath}",
+        args = { "--liblldb", "${liblldbPath}", "--port", "''${port}" },
+      },
+    }
+
+    -- Debug a leetgo-generated solution against a single testcase.
+    -- The solution binary reads its input from stdin, so stdin is redirected
+    -- from <cargo-root>/.dbg-input (populated by the repo's scripts/dbg-case).
+    -- codelldb's `stdio` launch field is silently ignored, hence the lldb
+    -- setting via preRunCommands.
+    local function leetcode_debug()
+      local dir = vim.fn.expand("%:p:h")
+      local slug = vim.fn.fnamemodify(dir, ":t"):gsub("^%d+%.", "")
+      local root = vim.fn.fnamemodify(dir, ":h:h")
+      local input = root .. "/.dbg-input"
+
+      if vim.fn.filereadable(root .. "/Cargo.toml") == 0 then
+        vim.notify("no Cargo.toml at " .. root, vim.log.levels.ERROR)
+        return
+      end
+      if vim.fn.filereadable(input) == 0 then
+        vim.notify("no .dbg-input; run scripts/dbg-case <qid> <n>", vim.log.levels.ERROR)
+        return
+      end
+
+      local out = vim.fn.system({
+        "cargo", "build", "--manifest-path", root .. "/Cargo.toml", "--bin", slug,
+      })
+      if vim.v.shell_error ~= 0 then
+        vim.notify(out, vim.log.levels.ERROR)
+        return
+      end
+
+      dap.run({
+        name = "leetcode: " .. slug,
+        type = "codelldb",
+        request = "launch",
+        program = root .. "/target/debug/" .. slug,
+        cwd = root,
+        stopOnEntry = false,
+        preRunCommands = { "settings set target.input-path " .. input },
+      })
+    end
+
+    vim.api.nvim_create_user_command("LeetDebug", leetcode_debug, {
+      desc = "Debug leetgo solution with .dbg-input on stdin",
+    })
   '';
 
   keymaps = [
@@ -226,6 +286,12 @@ in {
       key = "<leader>dn";
       action = "<cmd>RustLsp runnables<CR>";
       options.desc = "Rust: Runnables";
+    }
+    {
+      mode = "n";
+      key = "<leader>dL";
+      action = "<cmd>LeetDebug<CR>";
+      options.desc = "Rust: Debug leetcode testcase";
     }
   ];
 }
