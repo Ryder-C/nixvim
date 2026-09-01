@@ -3,12 +3,25 @@
   lib,
   ...
 }: let
-  systemFlake = "/home/ryder/nixos-config";
+  # Candidate locations for the system flake, first match wins.
+  systemFlakePaths = [
+    "/home/ryder/nixos-config"
+    "/etc/nixos-config"
+  ];
   thisFlake = "/home/ryder/Code/nixvim";
 
-  # nixd evaluates these strings itself, so the host is resolved at LSP runtime
-  # rather than baking one hostname into a config shared by all four machines.
-  nixosOptions = ''(builtins.getFlake "${systemFlake}").nixosConfigurations.''${builtins.replaceStrings ["\n"] [""] (builtins.readFile /etc/hostname)}.options'';
+  # nixd evaluates these strings itself, so both the flake location and the host
+  # are resolved at LSP runtime rather than baked into a config shared by all
+  # four machines (and built on only one of them).
+  systemFlake = ''
+    (let
+      found = builtins.filter (p: builtins.pathExists (p + "/flake.nix")) [${lib.concatMapStringsSep " " (p: "\"${p}\"") systemFlakePaths}];
+    in
+      if found == []
+      then throw "nixd: no system flake at any of ${lib.concatStringsSep ", " systemFlakePaths}"
+      else builtins.getFlake (builtins.head found))'';
+
+  nixosOptions = ''${systemFlake}.nixosConfigurations.''${builtins.replaceStrings ["\n"] [""] (builtins.readFile /etc/hostname)}.options'';
 in {
   plugins = {
     lsp = {
@@ -43,7 +56,7 @@ in {
           settings = {
             # Without this nixd cannot complete or document `pkgs.*` at all.
             # Reuse the system flake's nixpkgs so this costs no extra closure.
-            nixpkgs.expr = ''import (builtins.getFlake "${systemFlake}").inputs.nixpkgs {}'';
+            nixpkgs.expr = ''import ${systemFlake}.inputs.nixpkgs {}'';
 
             formatting.command = [(lib.getExe pkgs.alejandra)];
 
