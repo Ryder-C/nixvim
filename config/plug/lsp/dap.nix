@@ -112,25 +112,45 @@ in {
 
     -- Debug a leetgo-generated solution against a single testcase.
     -- The solution binary reads its input from stdin, so stdin is redirected
-    -- from <cargo-root>/.dbg-input (populated by the repo's scripts/dbg-case).
+    -- from <cargo-root>/.dbg-input, regenerated on every run by the repo's
+    -- scripts/dbg-case (a stale .dbg-input from another problem makes main()
+    -- fail at deserialize and exit before any breakpoint is reachable).
     -- codelldb's `stdio` launch field is silently ignored, hence the lldb
-    -- setting via preRunCommands.
-    local function leetcode_debug()
+    -- setting via preRunCommands -- which in turn only takes effect with
+    -- terminal = "console": codelldb otherwise runs the target via
+    -- runInTerminal, and the terminal buffer's stdin overrides input-path,
+    -- leaving the binary blocked on read_line() before any breakpoint.
+    local function leetcode_debug(opts)
       local dir = vim.fn.expand("%:p:h")
-      local slug = vim.fn.fnamemodify(dir, ":t"):gsub("^%d+%.", "")
+      local base = vim.fn.fnamemodify(dir, ":t")
+      local qid = base:match("^%d+")
+      local slug = base:gsub("^%d+%.", "")
       local root = vim.fn.fnamemodify(dir, ":h:h")
-      local input = root .. "/.dbg-input"
+      local repo = vim.fn.fnamemodify(root, ":h")
+      local case = (opts and opts.args ~= "" and opts.args) or "1"
+      local script = repo .. "/scripts/dbg-case"
 
       if vim.fn.filereadable(root .. "/Cargo.toml") == 0 then
         vim.notify("no Cargo.toml at " .. root, vim.log.levels.ERROR)
         return
       end
-      if vim.fn.filereadable(input) == 0 then
-        vim.notify("no .dbg-input; run scripts/dbg-case <qid> <n>", vim.log.levels.ERROR)
+      if not qid then
+        vim.notify("no question id in " .. base, vim.log.levels.ERROR)
+        return
+      end
+      if vim.fn.executable(script) == 0 then
+        vim.notify("no executable " .. script, vim.log.levels.ERROR)
         return
       end
 
-      local out = vim.fn.system({
+      local out = vim.fn.system({ script, qid, case })
+      if vim.v.shell_error ~= 0 then
+        vim.notify(out, vim.log.levels.ERROR)
+        return
+      end
+      vim.notify(out)
+
+      out = vim.fn.system({
         "cargo", "build", "--manifest-path", root .. "/Cargo.toml", "--bin", slug,
       })
       if vim.v.shell_error ~= 0 then
@@ -139,18 +159,20 @@ in {
       end
 
       dap.run({
-        name = "leetcode: " .. slug,
+        name = "leetcode: " .. slug .. " case " .. case,
         type = "codelldb",
         request = "launch",
         program = root .. "/target/debug/" .. slug,
         cwd = root,
         stopOnEntry = false,
-        preRunCommands = { "settings set target.input-path " .. input },
+        terminal = "console",
+        preRunCommands = { "settings set target.input-path " .. root .. "/.dbg-input" },
       })
     end
 
     vim.api.nvim_create_user_command("LeetDebug", leetcode_debug, {
-      desc = "Debug leetgo solution with .dbg-input on stdin",
+      nargs = "?",
+      desc = "Debug leetgo solution with testcase N (default 1) on stdin",
     })
   '';
 
