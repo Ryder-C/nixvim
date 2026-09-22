@@ -1,6 +1,7 @@
 {
   imports = [
     ./lsp.nix
+    ./clangd-extensions.nix
     ./rustaceanvim.nix
     ./dap.nix
     ./conform.nix

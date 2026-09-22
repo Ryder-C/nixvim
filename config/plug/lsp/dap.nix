@@ -110,6 +110,74 @@ in {
       },
     }
 
+    -- C / C++ / CUDA share the codelldb adapter above. Rust deliberately does
+    -- not appear here: rustaceanvim supplies its own runnables/debuggables.
+    --
+    -- There is no build step -- CMake projects vary too much to guess a target
+    -- -- so the prompt starts in the most likely build directory and you pick
+    -- the binary you already built.
+    local function build_dir()
+      local root = vim.fs.root(0, {
+        "compile_commands.json", "CMakeLists.txt", ".git",
+      }) or vim.fn.getcwd()
+      for _, dir in ipairs({ "build", "cmake-build-debug", "cmake-build-release", "out/build" }) do
+        if vim.fn.isdirectory(root .. "/" .. dir) == 1 then
+          return root .. "/" .. dir .. "/"
+        end
+      end
+      return root .. "/"
+    end
+
+    local function pick_executable()
+      return vim.fn.input("Executable: ", build_dir(), "file")
+    end
+
+    dap.configurations.cpp = {
+      {
+        name = "Launch executable",
+        type = "codelldb",
+        request = "launch",
+        program = pick_executable,
+        args = {},
+        cwd = "''${workspaceFolder}",
+        stopOnEntry = false,
+        -- Needed for programs that write to stdout or read from stdin; the
+        -- output lands in dap-ui's console pane.
+        terminal = "integrated",
+      },
+      {
+        name = "Launch executable (with args)",
+        type = "codelldb",
+        request = "launch",
+        program = pick_executable,
+        args = function()
+          return vim.split(vim.fn.input("Args: "), " ", { trimempty = true })
+        end,
+        cwd = "''${workspaceFolder}",
+        stopOnEntry = false,
+        terminal = "integrated",
+      },
+      {
+        name = "Attach to process",
+        type = "codelldb",
+        request = "attach",
+        pid = require("dap.utils").pick_process,
+        cwd = "''${workspaceFolder}",
+      },
+    }
+
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.cuda = dap.configurations.cpp
+
+    -- Projects that ship .vscode/launch.json get those entries too, listed
+    -- alongside the generic ones above in :DapContinue.
+    pcall(function()
+      require("dap.ext.vscode").load_launchjs(nil, {
+        codelldb = { "c", "cpp", "cuda", "rust" },
+        cppdbg = { "c", "cpp" },
+      })
+    end)
+
     -- Debug a leetgo-generated solution against a single testcase.
     -- The solution binary reads its input from stdin, so stdin is redirected
     -- from <cargo-root>/.dbg-input, regenerated on every run by the repo's
@@ -284,13 +352,13 @@ in {
       options.desc = "Toggle UI";
     }
     {
-      mode = [ "n" "v" ];
+      mode = ["n" "v"];
       key = "<leader>dh";
       action = "<cmd>lua require'dap.ui.widgets'.hover()<CR>";
       options.desc = "Hover Variables";
     }
     {
-      mode = [ "n" "v" ];
+      mode = ["n" "v"];
       key = "<leader>de";
       action = "<cmd>lua require'dapui'.eval()<CR>";
       options.desc = "Evaluate Expression";

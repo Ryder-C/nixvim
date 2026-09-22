@@ -8,6 +8,10 @@
     yamlfmt
     hclfmt
     typstyle
+    # clangd already puts clang-tools on $PATH, but conform should not depend
+    # on the LSP being enabled for its formatter to resolve.
+    clang-tools
+    gersemi
   ];
 
   plugins.conform-nvim = {
@@ -80,6 +84,17 @@
           "hclfmt"
         ];
         rust = ["rustfmt"];
+
+        # clang-format picks up the project's .clang-format; the
+        # --fallback-style passed to clangd only applies when there isn't one.
+        c = ["clang-format"];
+        cpp = ["clang-format"];
+        objc = ["clang-format"];
+        objcpp = ["clang-format"];
+        cuda = ["clang-format"];
+        proto = ["clang-format"];
+
+        cmake = ["gersemi"];
 
         typst = ["typstyle"];
       };

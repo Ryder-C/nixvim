@@ -95,8 +95,36 @@ in {
             # outputPath = "$root/out/$name";
           };
         };
+        # clangd reads compile_commands.json (symlink it from the build dir to
+        # the project root) or compile_flags.txt; without one it falls back to
+        # guessed flags and gets includes wrong on anything non-trivial.
         clangd = {
           enable = true;
+          cmd = [
+            "clangd"
+            # Index the whole project up front so references/rename cover files
+            # that were never opened.
+            "--background-index"
+            # clang-tidy diagnostics inline, driven by the project's .clang-tidy.
+            "--clang-tidy"
+            # Offer symbols from headers that aren't included yet, and add the
+            # include automatically on accept.
+            "--all-scopes-completion"
+            "--header-insertion=iwyu"
+            "--completion-style=detailed"
+            "--function-arg-placeholders"
+            # Only consulted when the project has no .clang-format.
+            "--fallback-style=llvm"
+          ];
+        };
+        # CMake buffers: completion and diagnostics for CMakeLists.txt/*.cmake.
+        # Formatting is left to conform's gersemi.
+        neocmake = {
+          enable = true;
+          onAttach.function = ''
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          '';
         };
       };
       keymaps = {
